@@ -1,0 +1,10 @@
+{% if next %}
+<form action="/login/?next={{next}}" method="post">
+  {%else%}
+  <form action="/login/" method="post">
+    {% endif %}
+    {% csrf_token %}
+    {{ form.as_p }}
+    <input type="submit" value="Login" />
+  </form>
+  <a href="/"> Home </a>

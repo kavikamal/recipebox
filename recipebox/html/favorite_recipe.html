@@ -1,0 +1,19 @@
+<html>
+
+<body>
+  <span>
+    <p>
+      <b>{{ request.user }}</b> favorited <b>{{ recipe }}</b>!!!
+    </p>
+  </span>
+  <div>
+    Here are your current favorites:
+    {% for r in recipes %}
+    <ul>
+      <li>{{ r }}</li>
+    </ul>
+  </div>
+  {% endfor %}
+</body>
+
+</html>

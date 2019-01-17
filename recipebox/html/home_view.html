@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+</head>
+
+<body>
+    {% if request.user.is_authenticated %}
+    <h1>Welcome {{request.user}}</h1>
+    {% endif %}
+    <h3>
+        Recipe List
+    </h3>
+    {% if recipe_list %}
+    <ul>
+        {% for recipe in recipe_list %}
+        <li><a href="/recipe/{{recipe.id}}">{{ recipe.title }}</a></li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <p>No recipes are available.</p>
+    {% endif %}
+
+    <hr>
+    <div>
+        <a href="/newrecipeadd/">Add a new Recipe</a>
+    </div>
+
+    {% if request.user.is_authenticated %}
+    <div>
+        <a href="/logout/">Log Out</a>
+    </div>
+    {% endif %}
+
+    {% if not request.user.is_authenticated %}
+    <div>
+        <a href="/login/">Login</a>
+    </div>
+    <div>
+        <a href="/signup/">Signup</a>
+    </div>
+    {% endif %}
+
+
+</body>
+
+</html>
