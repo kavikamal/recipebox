@@ -36,15 +36,15 @@ def author_view(request, author_id):
     return render(request, 'author_view.html', author)
 
 
-# def author_view(request, author_id):
+def author_view(request, author_id):
 
-#     data = {
-#         'author': Author.objects.get(pk=author_id),
-#         'recipes': list(Recipe.objects.all().filter(
-#             author_id=author_id).values()
-#         )
-#     }
-#     return render(request, 'author_view.html', {'data': data})
+    data = {
+        'author': Author.objects.get(pk=author_id),
+        'recipes': list(Recipe.objects.all().filter(
+            author_id=author_id).values()
+        )
+    }
+    return render(request, 'author_view.html', {'data': data})
 
 
 @login_required
@@ -70,12 +70,14 @@ def new_recipe_add(request):
     return render(request, 'new_recipe_add.html', {'form': form})
 
 
-class edit_recipe(LoginRequiredMixin, UpdateView):
+class RecipeUpdate(LoginRequiredMixin, UpdateView):
     model = Recipe
+    template_name = 'edit_recipe.html'
     fields = ['title', 'description', 'time', 'instructions']
 
     def get_success_url(self):
-        return reverse('homepage')
+        recipeid = self.kwargs['pk']
+        return reverse('recipe_edit', kwargs={'pk': recipeid})
 
 
 def favorite_recipe(request, id):
@@ -88,14 +90,6 @@ def favorite_recipe(request, id):
     recipes = author.favorites.all()
     print(recipes)
     return render(request, 'favorite_recipe.html', {'recipe': recipe, 'recipes': recipes})
-
-# def favorite_recipe(request, id):
-#     recipe = Recipe.objects.filter(id=id).first()
-#     if recipe in request.user.author.favorites.all():
-#         request.user.author.favorites.remove(recipe)
-#     else:
-#         request.user.author.favorites.add(recipe)
-#     return HttpResponseRedirect(reverse('homepage'))
 
 
 def signup_user(request):
